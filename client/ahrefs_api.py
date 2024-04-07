@@ -47,20 +47,28 @@ class AhrefsAPI:
                 return resp
             except (HTTPStatusError, RequestError) as e:
                 if attempt == req.retry:
+                    more_info = ""
+                    if resp and resp.text:
+                        more_info = f" - {resp.text}"
                     raise FailedRetryException(
-                        f"Failed to get response after {req.retry} retries"
+                        f"Failed to get response after {req.retry} retries {more_info}"
                     ) from e
 
-    def request(self, req: APIRequest) -> BaseResponse[APIRequest]:
+    def request(
+        self, req: APIRequest
+    ) -> BaseResponse[APIRequest] | list[BaseResponse[APIRequest]]:
         resp = self.get(req)
         resp_klass = RESPONSE_CLASS_MAP.get(type(req))
         if not resp_klass:
             raise ValueError(f"Unknown request type: {req}")
-        return resp_klass(
-            **resp.json()[req._obj_name],
-            request=req,
-            elapsed=resp.elapsed.total_seconds(),
-        )
+
+        obj = resp.json()[req._obj_name]
+        elapsed = resp.elapsed.total_seconds()
+
+        if isinstance(obj, list):
+            return [resp_klass(**item, request=req, elapsed=elapsed) for item in obj]
+        else:
+            return resp_klass(**obj, request=req, elapsed=elapsed)
 
     @classmethod
     @contextmanager
