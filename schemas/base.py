@@ -8,6 +8,166 @@ APIRequest = TypeVar("APIRequest", bound="BaseRequest")
 RESPONSE_CLASS_MAP = {}
 
 
+class AllBacklinksSelect(str, Enum):
+    ahrefs_rank_source = "ahrefs_rank_source"
+    ahrefs_rank_target = "ahrefs_rank_target"
+    alt = "alt"
+    anchor = "anchor"
+    broken_redirect_new_target = "broken_redirect_new_target"
+    broken_redirect_reason = "broken_redirect_reason"
+    broken_redirect_source = "broken_redirect_source"
+    class_c = "class_c"
+    discovered_status = "discovered_status"
+    domain_rating_source = "domain_rating_source"
+    domain_rating_target = "domain_rating_target"
+    drop_reason = "drop_reason"
+    encoding = "encoding"
+    first_seen = "first_seen"
+    first_seen_link = "first_seen_link"
+    http_code = "http_code"
+    http_crawl = "http_crawl"
+    ip_source = "ip_source"
+    is_alternate = "is_alternate"
+    is_canonical = "is_canonical"
+    is_content = "is_content"
+    is_dofollow = "is_dofollow"
+    is_form = "is_form"
+    is_frame = "is_frame"
+    is_image = "is_image"
+    is_lost = "is_lost"
+    is_new = "is_new"
+    is_nofollow = "is_nofollow"
+    is_redirect = "is_redirect"
+    is_redirect_lost = "is_redirect_lost"
+    is_root_source = "is_root_source"
+    is_root_target = "is_root_target"
+    is_rss = "is_rss"
+    is_sponsored = "is_sponsored"
+    is_text = "is_text"
+    is_ugc = "is_ugc"
+    js_crawl = "js_crawl"
+    languages = "languages"
+    last_seen = "last_seen"
+    last_visited = "last_visited"
+    link_group_count = "link_group_count"
+    link_type = "link_type"
+    linked_domains_source_domain = "linked_domains_source_domain"
+    linked_domains_source_page = "linked_domains_source_page"
+    linked_domains_target_domain = "linked_domains_target_domain"
+    links_external = "links_external"
+    links_internal = "links_internal"
+    lost_reason = "lost_reason"
+    name_source = "name_source"
+    name_target = "name_target"
+    noindex = "noindex"
+    page_size = "page_size"
+    port_source = "port_source"
+    port_target = "port_target"
+    positions = "positions"
+    powered_by = "powered_by"
+    redirect_code = "redirect_code"
+    redirect_kind = "redirect_kind"
+    refdomains_source = "refdomains_source"
+    refdomains_source_domain = "refdomains_source_domain"
+    refdomains_target_domain = "refdomains_target_domain"
+    root_name_source = "root_name_source"
+    root_name_target = "root_name_target"
+    snippet_left = "snippet_left"
+    snippet_right = "snippet_right"
+    source_page_author = "source_page_author"
+    page_title = "title"
+    tld_class_source = "tld_class_source"
+    tld_class_target = "tld_class_target"
+    traffic = "traffic"
+    traffic_domain = "traffic_domain"
+    url_from = "url_from"
+    url_from_plain = "url_from_plain"
+    url_rating_source = "url_rating_source"
+    url_redirect = "url_redirect"
+    url_to = "url_to"
+    url_to_plain = "url_to_plain"
+
+    def __str__(self):
+        return self.value
+
+
+class BrokenRedirectReason(str, Enum):
+    droppedmanual = "droppedmanual"
+    droppedtooold = "droppedtooold"
+    dropped = "dropped"
+    codechanged = "codechanged"
+    nxdomain = "nxdomain"
+    robotsdisallowed = "robotsdisallowed"
+    curlerror = "curlerror"
+    invalidtarget = "invalidtarget"
+    nomorecanonical = "nomorecanonical"
+    isnowparked = "isnowparked"
+    targetchanged = "targetchanged"
+
+
+class DiscoveredStatus(str, Enum):
+    pagefound = "pagefound"
+    linkfound = "linkfound"
+    linkrestored = "linkrestored"
+
+
+class DropReason(str, Enum):
+    manual = "manual"
+    noratingunused = "noratingunused"
+    notop = "notop"
+    tooold = "tooold"
+    oldunavailable = "oldunavailable"
+    rescursive = "recursive"
+    duplicate = "duplicate"
+    nxdomain = "nxdomain"
+    malformed = "malformed"
+    blockedport = "blockedport"
+    disallowed = "disallowed"
+    unlinked = "unlinked"
+
+
+class LinkType(str, Enum):
+    redirect = "redirect"
+    frame = "frame"
+    text = "text"
+    form = "form"
+    canonical = "canonical"
+    alternate = "alternate"
+    rss = "rss"
+    image = "image"
+
+
+class Aggregation(str, Enum):
+    similar_links = "similar_links"
+    one_per_domain = "1_per_domain"
+    all = "all"
+
+    def __str__(self):
+        return self.value
+
+
+class TldClassSource(str, Enum):
+    gov = "gov"
+    edu = "edu"
+    normal = "normal"
+
+
+class TldClassTarget(str, Enum):
+    gov = "gov"
+    edu = "edu"
+    normal = "normal"
+
+
+class LostReason(str, Enum):
+    removedfromhtml = "removedfromhtml"
+    notcanonical = "notcanonical"
+    noindex = "noindex"
+    pageredirected = "pageredirected"
+    pageerror = "pageerror"
+    lostredirect = "lostredirect"
+    notfound = "notfound"
+
+
 class RequestMode(str, Enum):
     exact = "exact"
     prefix = "prefix"
@@ -304,7 +464,9 @@ class BaseRequest(BaseModel):
     cache: bool = Field(True, description="Whether to cache the response")
 
     def make_params(self) -> Dict[str, str]:
-        return self.dict(exclude={"retry", "cache"})
+        params = self.dict(exclude={"retry", "cache"})
+        filtered_params = {k: v for k, v in params.items() if v is not None}
+        return filtered_params
 
 
 class BaseResponse(BaseModel, Generic[APIRequest]):

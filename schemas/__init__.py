@@ -1,3 +1,4 @@
+from schemas.all_backlinks import *
 from schemas.backlinks_stats import *
 from schemas.domain_rating import *
 from schemas.domain_rating_history import *
@@ -36,4 +37,6 @@ __ALL__ = [
     "MetricsByCountryResponse",
     "PagesByTrafficRequest",
     "PagesByTrafficResponse",
+    "AllBacklinksRequest",
+    "AllBacklinksResponse",
 ]
