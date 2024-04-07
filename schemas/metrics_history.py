@@ -28,13 +28,17 @@ class MetricsHistoryRequest(BaseRequest):
     history_grouping: HistoryGrouping = Field(
         HistoryGrouping.monthly,
         title="History Grouping",
-        description="The time interval used to group historical data. `daily`, `weekly`, `monthly`",
+        description=(
+            "The time interval used to group historical data. "
+            "`daily`, `weekly`, `monthly`"
+        ),
     )
     mode: RequestMode = Field(
         RequestMode.subdomains,
         title="Mode",
         description=(
-            "The scope of the search based on the target you entered. `exact`, `prefix`, `domain`, `subdomains`"
+            "The scope of the search based on the target you entered. "
+            "`exact`, `prefix`, `domain`, `subdomains`"
         ),
     )
     protocol: str = Field(
@@ -58,20 +62,32 @@ class MetricsHistoryResponse(BaseResponse):
     org_traffic: int = Field(
         ...,
         title="Organic Traffic",
-        description="(10 units) The estimated number of monthly visitors that your target gets from organic search.",
+        description=(
+            "(10 units) The estimated number of monthly visitors that your "
+            "target gets from organic search."
+        ),
     )
     paid_traffic: int = Field(
         ...,
         title="Paid Traffic",
-        description="(10 units) The estimated number of monthly visitors that your target gets from paid search.",
+        description=(
+            "(10 units) The estimated number of monthly visitors that your "
+            "target gets from paid search."
+        ),
     )
     org_cost: int | None = Field(
         ...,
         title="Organic Cost",
-        description="(10 units) The estimated cost of your target's monthly organic search traffic.",
+        description=(
+            "(10 units) The estimated cost of your target's monthly "
+            "organic search traffic."
+        ),
     )
     paid_cost: int | None = Field(
         ...,
         title="Paid Cost",
-        description="(10 units) The estimated cost of your target's monthly paid search traffic.",
+        description=(
+            "(10 units) The estimated cost of your target's monthly "
+            "paid search traffic."
+        ),
     )
