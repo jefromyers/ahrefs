@@ -17,9 +17,21 @@ if __name__ == "__main__":
 
     target = "ahrefs.com"
     with AhrefsAPI.connect(token=token) as api:
+        # Domain Rating
         request = DomainRatingRequest(target=target, date=f"{datetime.now():%Y-%m-%d}")
         result = api.request(request)
         print(f"Domain Rating : {result.domain_rating}")
         print(f"Ahrefs Rank   : {result.ahrefs_rank}")
         print(f"Request       : {result.request}")
         print(f"Seconds       : {result.elapsed}")
+        # Backlinks Stats
+        request = BacklinksStatsRequest(
+            target=target, date=f"{datetime.now():%Y-%m-%d}"
+        )
+        result = api.request(request)
+        print(f"Live Backlinks            : {result.live}")
+        print(f"All Time Backlinks        : {result.all_time}")
+        print(f"Live Referring Domains    : {result.live_refdomains}")
+        print(f"All Time Referring Domains: {result.all_time_refdomains}")
+        print(f"Request                   : {result.request}")
+        print(f"Seconds                   : {result.elapsed}")
