@@ -310,3 +310,36 @@ class BaseRequest(BaseModel):
 class BaseResponse(BaseModel, Generic[APIRequest]):
     request: APIRequest = Field(..., description="The request object")
     elapsed: float = Field(..., description="The time taken to process the request")
+    api_rows: int | None = Field(
+        None,
+        alias="x_api_rows",
+        title="Api Rows",
+        description="The number of rows returned",
+    )
+    api_units_cost_row: int | None = Field(
+        None,
+        alias="x_api_units_cost_row",
+        title="Api Units Cost Row",
+        description="The per-row units cost.",
+    )
+    api_units_cost_total: int | None = Field(
+        None,
+        alias="x_api_units_cost_total",
+        title="Api Units Cost Total",
+        description=(
+            "The overall units that the request should consume based on the "
+            "number of rows and per-row cost."
+        ),
+    )
+    api_units_cost_total_actual: int | None = Field(
+        None,
+        alias="x_api_units_cost_total_actual",
+        title="Api Units Cost Total Actual",
+        description="The overall units that the request actually consumed.",
+    )
+    api_cache: str | None = Field(
+        None,
+        alias="x_api_cache",
+        title="Api Cache",
+        description="Whether the request was served from cache.",
+    )

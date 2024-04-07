@@ -29,6 +29,17 @@ class AhrefsAPI:
         key = self.cache.create_key(endpoint, params)
         self.cache.set(key, response)
 
+    def _get_ahrefs_response_headers(self, res: Response) -> dict:
+        return {
+            "x_api_rows": res.headers.get("x-api-rows"),
+            "x_api_units_cost_row": res.headers.get("x-api-units-cost-row"),
+            "x_api_units_cost_total": res.headers.get("x-api-units-cost-total"),
+            "x_api_units_cost_total_actual": res.headers.get(
+                "x-api-units-cost-total-actual"
+            ),
+            "x_api_cache": res.headers.get("x-api-cache"),
+        }
+
     def get(self, req: APIRequest) -> Response:
         url = f"{self.API}{req._endpoint}"
         params = req.make_params()
@@ -64,11 +75,14 @@ class AhrefsAPI:
 
         obj = resp.json()[req._obj_name]
         elapsed = resp.elapsed.total_seconds()
-
+        headers = self._get_ahrefs_response_headers(resp)
         if isinstance(obj, list):
-            return [resp_klass(**item, request=req, elapsed=elapsed) for item in obj]
+            return [
+                resp_klass(**item, **headers, request=req, elapsed=elapsed)
+                for item in obj
+            ]
         else:
-            return resp_klass(**obj, request=req, elapsed=elapsed)
+            return resp_klass(**obj, **headers, request=req, elapsed=elapsed)
 
     @classmethod
     @contextmanager
