@@ -28,7 +28,7 @@ class AllBacklinksRequest(BaseRequest):
     aggregation: Aggregation = Field(
         Aggregation.similar_links, description="The backlinks grouping mode."
     )
-    # TODO: Add history enum
+    # TODO MISSING: Add history enum
     limit: int = Field(1_000, description="The number of results to return.")
     mode: RequestMode = Field(
         RequestMode.subdomains,
@@ -53,8 +53,7 @@ class AllBacklinksRequest(BaseRequest):
     timeout: int | None = Field(
         None, description="A manual timeout duration in seconds."
     )
-    # TODO: Add where filter
-
+    # TODO MISSING: Add where filtering
     select: List[AllBacklinksSelect] = Field(
         ...,
         title="Select",
