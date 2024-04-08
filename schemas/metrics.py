@@ -15,9 +15,10 @@ from schemas.base import (
 class MetricsRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/metrics")
     _obj_name: str = PrivateAttr("metrics")
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
-    date: DateType = Field(
-        ..., description="A date to report metrics on in YYYY-MM-DD format."
+    country_code: CountryCode | None = Field(
+        None,
+        title="Country Code",
+        description="The country code to use for the request. Defaults to None.",
     )
     mode: RequestMode = Field(
         RequestMode.subdomains,
@@ -34,11 +35,10 @@ class MetricsRequest(BaseRequest):
         VolumeMode.monthly,
         description="The volume mode to use for the request. Defaults to 'monthly'.",
     )
-    country_code: CountryCode | None = Field(
-        None,
-        title="Country Code",
-        description="The country code to use for the request. Defaults to None.",
+    date: DateType = Field(
+        ..., description="A date to report metrics on in YYYY-MM-DD format."
     )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 
 @response_for(MetricsRequest)

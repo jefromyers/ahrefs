@@ -27,7 +27,6 @@ class SelectMode(str, Enum):
 class KeywordsHistoryRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/keywords-history")
     _obj_name: str = PrivateAttr("keywords")
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
     country_code: CountryCode | None = Field(
         None,
         title="Country Code",
@@ -52,11 +51,6 @@ class KeywordsHistoryRequest(BaseRequest):
         "both",
         description="The protocol to use for the request. Defaults to 'http'.",
     )
-    date_from: DateType = Field(
-        ...,
-        title="Date From",
-        description="The start date of the historical period in YYYY-MM-DD format.",
-    )
     select: List[SelectMode] = Field(
         [SelectMode.date, SelectMode.top3, SelectMode.top4_10, SelectMode.top11_plus],
         title="Select",
@@ -65,6 +59,12 @@ class KeywordsHistoryRequest(BaseRequest):
             "`date`, `top3`, `top4-10`, `top11-plus`"
         ),
     )
+    date_from: DateType = Field(
+        ...,
+        title="Date From",
+        description="The start date of the historical period in YYYY-MM-DD format.",
+    )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
     def dict(self, **kwargs) -> dict:
         d = super().dict(**kwargs)

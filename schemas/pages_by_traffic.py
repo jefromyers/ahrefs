@@ -5,6 +5,7 @@ from pydantic import Field, PrivateAttr
 from schemas.base import (
     BaseRequest,
     BaseResponse,
+    CountryCode,
     RequestMode,
     VolumeMode,
     response_for,
@@ -14,6 +15,11 @@ from schemas.base import (
 class PagesByTrafficRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/pages-by-traffic")
     _obj_name: str = PrivateAttr("pages")
+    country_code: CountryCode | None = Field(
+        None,
+        title="Country Code",
+        description="The country code to use for the request. Defaults to None.",
+    )
     mode: RequestMode = Field(
         RequestMode.subdomains,
         title="Mode",
@@ -21,11 +27,6 @@ class PagesByTrafficRequest(BaseRequest):
             "The scope of the search based on the target you entered. "
             "`exact`, `prefix`, `domain`, `subdomains`"
         ),
-    )
-    offset: int = Field(
-        0,
-        title="Offset",
-        description="Returned results will start from the row indicated in the offset value.",
     )
     protocol: str = Field(
         "both",

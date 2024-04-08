@@ -2,20 +2,28 @@ from datetime import date as DateType
 
 from pydantic import Field, PrivateAttr
 
-from schemas.base import BaseRequest, BaseResponse, response_for
+from schemas.base import BaseRequest, BaseResponse, RequestMode, response_for
 
 
 class BacklinksStatsRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/backlinks-stats")
     _obj_name: str = PrivateAttr("metrics")
-    date: DateType = Field(
-        ..., description="A date to report metrics on in YYYY-MM-DD format."
+    mode: RequestMode = Field(
+        RequestMode.subdomains,
+        title="Mode",
+        description=(
+            "The scope of the search based on the target you entered. "
+            "`exact`, `prefix`, `domain`, `subdomains`"
+        ),
     )
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
     protocol: str = Field(
         "both",
         description="The protocol to use for the request. Defaults to 'http'.",
     )
+    date: DateType = Field(
+        ..., description="A date to report metrics on in YYYY-MM-DD format."
+    )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 
 @response_for(BacklinksStatsRequest)

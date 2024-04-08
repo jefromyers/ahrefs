@@ -16,7 +16,6 @@ from schemas.base import (
 class MetricsHistoryRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/metrics-history")
     _obj_name: str = PrivateAttr("metrics")
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
     country_code: CountryCode | None = Field(
         None,
         title="Country Code",
@@ -54,6 +53,7 @@ class MetricsHistoryRequest(BaseRequest):
         title="Date From",
         description="The start date of the historical period in YYYY-MM-DD format.",
     )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 
 @response_for(MetricsHistoryRequest)

@@ -16,7 +16,6 @@ from schemas.base import (
 class RefDomainHistoryRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/refdomains-history")
     _obj_name: str = PrivateAttr("refdomains")
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
     date_to: DateType | None = Field(
         None, description="The end date of the historical period in YYYY-MM-DD format."
     )
@@ -41,6 +40,7 @@ class RefDomainHistoryRequest(BaseRequest):
         title="Date From",
         description="The start date of the historical period in YYYY-MM-DD format.",
     )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 
 @response_for(RefDomainHistoryRequest)

@@ -16,7 +16,6 @@ from schemas.base import (
 class PageHistoryRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/pages-history")
     _obj_name: str = PrivateAttr("pages")
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
     country_code: CountryCode | None = Field(
         None,
         title="Country Code",
@@ -41,15 +40,12 @@ class PageHistoryRequest(BaseRequest):
         "both",
         description="The protocol to use for the request. Defaults to 'http'.",
     )
-    volume_mode: VolumeMode = Field(
-        VolumeMode.monthly,
-        description="The volume mode to use for the request. Defaults to 'monthly'.",
-    )
     date_from: DateType = Field(
         ...,
         title="Date From",
         description="The start date of the historical period in YYYY-MM-DD format.",
     )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 
 @response_for(PageHistoryRequest)

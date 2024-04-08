@@ -8,7 +8,6 @@ from schemas.base import BaseRequest, BaseResponse, RequestMode, response_for
 class OutlinksStatsRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/outlinks-stats")
     _obj_name: str = PrivateAttr("metrics")
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
     mode: RequestMode = Field(
         RequestMode.subdomains,
         title="Mode",
@@ -20,6 +19,7 @@ class OutlinksStatsRequest(BaseRequest):
         "both",
         description="The protocol to use for the request. Defaults to 'http'.",
     )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 
 @response_for(OutlinksStatsRequest)
