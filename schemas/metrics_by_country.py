@@ -5,8 +5,6 @@ from pydantic import Field, PrivateAttr
 from schemas.base import (
     BaseRequest,
     BaseResponse,
-    CountryCode,
-    HistoryGrouping,
     RequestMode,
     VolumeMode,
     response_for,
@@ -16,29 +14,10 @@ from schemas.base import (
 class MetricsByCountryRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/metrics-by-country")
     _obj_name: str = PrivateAttr("metrics")
-    limit: int = Field(
-        ..., title="Limit", description="The number of results to return."
+    limit: int | None = Field(
+        0, title="Limit", description="The number of results to return."
     )
-    mode: RequestMode = Field(
-        RequestMode.subdomains,
-        title="Mode",
-        description=(
-            "The scope of the search based on the target you entered. `exact`, `prefix`, `domain`, `subdomains`"
-        ),
-    )
-    offset: int = Field(
-        0,
-        title="Offset",
-        description="Returned results will start from the row indicated in the offset value.",
-    )
-    protocol: str = Field(
-        "both",
-        description="The protocol to use for the request. Defaults to 'http'.",
-    )
-    volume_mode: VolumeMode = Field(
-        VolumeMode.monthly,
-        description="The volume mode to use for the request. Defaults to 'monthly'.",
-    )
+    # Required fields
     date: DateType = Field(
         ..., description="A date to report metrics on in YYYY-MM-DD format."
     )

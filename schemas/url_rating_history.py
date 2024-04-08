@@ -8,14 +8,7 @@ from schemas.base import BaseRequest, BaseResponse, HistoryGrouping, response_fo
 class UrlRatingHistoryRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/domain-rating-history")
     _obj_name: str = PrivateAttr("domain_ratings")
-    date_to: DateType | None = Field(
-        None, description="The end date of the historical period in YYYY-MM-DD format."
-    )
-    history_grouping: HistoryGrouping = Field(
-        HistoryGrouping.monthly,
-        title="History Grouping",
-        description="The time interval used to group historical data. `daily`, `weekly`, `monthly`",
-    )
+    # Required fields
     date_from: DateType = Field(
         ...,
         title="Date From",

@@ -1,6 +1,7 @@
 from datetime import date as DateType
 from datetime import datetime as DatetimeType
-from typing import List
+from enum import Enum
+from typing import Dict, List
 
 from pydantic import Field, PrivateAttr
 
@@ -14,14 +15,15 @@ from schemas.base import (
     DropReason,
     LinkType,
     LostReason,
+    RequestMode,
     TldClassSource,
     TldClassTarget,
     response_for,
 )
 
 
-class AllBacklinksRequest(BaseRequest):
-    _endpoint: str = PrivateAttr("/v3/site-explorer/all-backlinks")
+class BrokenBacklinksRequest(BaseRequest):
+    _endpoint: str = PrivateAttr("/v3/site-explorer/broken-backlinks")
     _obj_name: str = PrivateAttr("backlinks")
     # Defaults
     aggregation: Aggregation = Field(
@@ -44,8 +46,9 @@ class AllBacklinksRequest(BaseRequest):
     target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 
-@response_for(AllBacklinksRequest)
-class AllBacklinksResponse(BaseResponse):
+# TODO: There seem to be AllBacklinksSelect that are not in the response schema, need to double check
+@response_for(BrokenBacklinksRequest)
+class BrokenBacklinksResponse(BaseResponse):
     ahrefs_rank_source: int | None = Field(
         None,
         title="Ahrefs Rank Source",

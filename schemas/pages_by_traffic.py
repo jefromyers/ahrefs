@@ -2,40 +2,13 @@ from datetime import date as DateType
 
 from pydantic import Field, PrivateAttr
 
-from schemas.base import (
-    BaseRequest,
-    BaseResponse,
-    CountryCode,
-    RequestMode,
-    VolumeMode,
-    response_for,
-)
+from schemas.base import BaseRequest, BaseResponse, response_for
 
 
 class PagesByTrafficRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/pages-by-traffic")
     _obj_name: str = PrivateAttr("pages")
-    country_code: CountryCode | None = Field(
-        None,
-        title="Country Code",
-        description="The country code to use for the request. Defaults to None.",
-    )
-    mode: RequestMode = Field(
-        RequestMode.subdomains,
-        title="Mode",
-        description=(
-            "The scope of the search based on the target you entered. "
-            "`exact`, `prefix`, `domain`, `subdomains`"
-        ),
-    )
-    protocol: str = Field(
-        "both",
-        description="The protocol to use for the request. Defaults to 'http'.",
-    )
-    volume_mode: VolumeMode = Field(
-        VolumeMode.monthly,
-        description="The volume mode to use for the request. Defaults to 'monthly'.",
-    )
+    # Required fields
     target: str = Field(..., description="The target of the search: a domain or a URL.")
 
 

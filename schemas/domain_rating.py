@@ -8,13 +8,13 @@ from schemas.base import BaseRequest, BaseResponse, response_for
 class DomainRatingRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/domain-rating")
     _obj_name: str = PrivateAttr("domain_rating")
-    date: DateType = Field(
+
+    # Required fields
+    date: DateType | None = Field(
         ..., description="A date to report metrics on in YYYY-MM-DD format."
     )
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
-    protocol: str = Field(
-        "both",
-        description="The protocol to use for the request. Defaults to 'http'.",
+    target: str | None = Field(
+        ..., description="The target of the search: a domain or a URL."
     )
 
 
