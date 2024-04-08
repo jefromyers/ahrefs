@@ -25,7 +25,7 @@ if __name__ == "__main__":
         # print(f"Request       : {result.request}")
         # print(f"Seconds       : {result.elapsed}")
 
-        # # Backlinks Stats
+        # Backlinks Stats
         # request = BacklinksStatsRequest(
         #     target=target, date=f"{datetime.now():%Y-%m-%d}"
         # )
@@ -40,7 +40,6 @@ if __name__ == "__main__":
         # List Outlinks Stats
         # request = OutlinksStatsRequest(
         #     target=target,
-        #     mode=RequestMode.subdomains,
         # )
         # print(request)
         # result = api.request(request)
@@ -55,10 +54,6 @@ if __name__ == "__main__":
         # request = MetricsRequest(
         #     target=target,
         #     date=f"{datetime.now():%Y-%m-%d}",
-        #     mode=RequestMode.subdomains,
-        #     protocol="both",
-        #     volume_mode=VolumeMode.monthly,
-        #     country_code=None,
         # )
         # result = api.request(request)
         # print(f"Organic Keywords          : {result.org_keywords}")
@@ -76,10 +71,6 @@ if __name__ == "__main__":
         # request = RefDomainHistoryRequest(
         #     target=target,
         #     date_from=datetime(2024, 1, 1),
-        #     date_to=datetime(2024, 4, 7),
-        #     history_grouping=HistoryGrouping.monthly,
-        #     mode=RequestMode.subdomains,
-        #     protocol="both",
         # )
         # results = api.request(request)
         # for hist in results:
@@ -89,8 +80,6 @@ if __name__ == "__main__":
         # request = DomainRatingHistoryRequest(
         #     target=target,
         #     date_from=datetime(2024, 1, 1),
-        #     date_to=datetime(2024, 4, 7),
-        #     history_grouping=HistoryGrouping.monthly,
         # )
         # results = api.request(request)
         # for hist in results:
@@ -101,8 +90,6 @@ if __name__ == "__main__":
         # request = UrlRatingHistoryRequest(
         #     target=target,
         #     date_from=datetime(2024, 1, 1),
-        #     date_to=datetime(2024, 4, 7),
-        #     history_grouping=HistoryGrouping.monthly,
         # )
         # results = api.request(request)
         # for hist in results:
@@ -189,12 +176,174 @@ if __name__ == "__main__":
         # print(result)
 
         # All Backlinks
-        target = "https://citationlabs.com/"
-        request = AllBacklinksRequest(
-            target=target,
-            select=[AllBacklinksSelect.anchor, AllBacklinksSelect.url_from],
-            limit=10,
-        )
-        result = api.request(request)
-        for backlink in result:
-            print(f"URL: {backlink.anchor} Referring Page: {backlink.url_from}")
+        # target = "https://citationlabs.com/"
+        # request = AllBacklinksRequest(
+        #     target=target,
+        #     select=[BacklinksSelect.anchor, BacklinksSelect.url_from],
+        #     limit=10,
+        # )
+        # result = api.request(request)
+        # for backlink in result:
+        #     print(f"URL: {backlink.anchor} Referring Page: {backlink.url_from}")
+
+        # Broken Backlinks
+        # target = "https://citationlabs.com/"
+        # request = BrokenBacklinksRequest(
+        #     target=target,
+        #     select=[BacklinksSelect.anchor, BacklinksSelect.url_from],
+        #     limit=10,
+        # )
+        # result = api.request(request)
+        # for backlink in result:
+        #     print(f"URL: {backlink.anchor} Referring Page: {backlink.url_from}")
+
+        # Broken Backlinks
+        # target = "https://citationlabs.com/"
+        # request = RefdomainsRequest(
+        #     target=target,
+        #     select=[RefdomainsSelect.domain, RefdomainsSelect.domain_rating],
+        #     limit=10,
+        # )
+        # result = api.request(request)
+        # for refdomain in result:
+        #     print(
+        #         f"Domain: {refdomain.domain} Domain Rating: {refdomain.domain_rating}"
+        #     )
+
+        # Anchors
+        # target = "https://citationlabs.com/"
+        # request = AnchorsRequest(
+        #     target=target,
+        #     select=[AnchorsSelect.anchor, AnchorsSelect.top_domain_rating],
+        #     limit=10,
+        # )
+        # result = api.request(request)
+        # for anchor in result:
+        #     print(f"Anchor: {anchor.anchor} Count: {anchor.top_domain_rating}")
+
+        # This could be a convenience method.
+        # api.anchors(target=target, select="", limit=10)
+
+        # Organic Keywords
+        # target = "https://citationlabs.com/"
+        # request = OrganicKeywordsRequest(
+        #     target=target,
+        #     country=CountryCode.US,
+        #     date=f"{datetime.today():%Y-%m-%d}",
+        #     select=[
+        #         OrganicKeywordsSelect.keyword,
+        #         OrganicKeywordsSelect.volume,
+        #         OrganicKeywordsSelect.cpc,
+        #     ],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for keyword in results:
+        #     print(
+        #         f"Keyword: {keyword.keyword} Volume: {keyword.volume} CPC: {keyword.cpc}"
+        #     )
+
+        # Top Pages
+        # target = "https://citationlabs.com/"
+        # request = TopPagesRequest(
+        #     target=target,
+        #     date=f"{datetime.today():%Y-%m-%d}",
+        #     select=[
+        #         TopPagesSelect.raw_url,
+        #         TopPagesSelect.sum_traffic,
+        #         TopPagesSelect.keywords,
+        #     ],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for page in results:
+        #     print(
+        #         f"Page: {page.raw_url} Traffic: {page.sum_traffic} Keywords: {page.keywords}"
+        #     )
+
+        # Paid Pages
+        # target = "https://ahrefs.com/"
+        # request = PaidPagesRequest(
+        #     target=target,
+        #     date=f"{datetime.today():%Y-%m-%d}",
+        #     select=[
+        #         PaidPagesSelect.keywords,
+        #         PaidPagesSelect.sum_traffic,
+        #         PaidPagesSelect.top_keyword_best_position,
+        #     ],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for page in results:
+        #     print(
+        #         f"Top: {page.top_keyword_best_position} Traffic: {page.sum_traffic} Keywords: {page.keywords}"
+        #     )
+
+        # Best By External Links
+        # target = "https://citationlabs.com/"
+        # request = BestByExternalLinksRequest(
+        #     target=target,
+        #     select=[
+        #         BestByExternalLinksSelect.url_to,
+        #         BestByExternalLinksSelect.new_links_to_target,
+        #     ],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for page in results:
+        #     print(f"URL: {page.url_to} New Links: {page.new_links_to_target}")
+
+        # Best By Internal Links
+        # target = "https://citationlabs.com/"
+        # request = BestByInternalLinksRequest(
+        #     target=target,
+        #     select=[
+        #         BestByInternalLinksSelect.url_to,
+        #         BestByInternalLinksSelect.links_to_target,
+        #     ],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for page in results:
+        #     print(f"URL: {page.url_to} Links: {page.links_to_target}")
+
+        # Linked Domains
+        # target = "https://citationlabs.com/"
+        # request = LinkedDomainsRequest(
+        #     target=target,
+        #     select=[LinkedDomainsSelect.dofollow_links, LinkedDomainsSelect.domain],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for page in results:
+        #     print(f"Domain: {page.domain} Links: {page.dofollow_links}")
+
+        # Outgoing External Anchors
+        # target = "https://citationlabs.com/"
+        # request = OutgoingExternalAnchorsRequest(
+        #     target=target,
+        #     select=[
+        #         OutgoingExternalAnchorsSelect.anchor,
+        #         OutgoingExternalAnchorsSelect.dofollow_links,
+        #     ],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for page in results:
+        #     print(f"Anchor: {page.anchor} Links: {page.dofollow_links}")
+
+        # Outgoing Internal Anchors
+        # target = "https://citationlabs.com/"
+        # request = OutgoingInternalAnchorsRequest(
+        #     target=target,
+        #     select=[
+        #         OutgoingInternalAnchorsSelect.anchor,
+        #         OutgoingInternalAnchorsSelect.dofollow_links,
+        #     ],
+        #     limit=10,
+        # )
+        # results = api.request(request)
+        # for page in results:
+        #     print(f"Anchor: {page.anchor} Links: {page.dofollow_links}")
+
+        ...

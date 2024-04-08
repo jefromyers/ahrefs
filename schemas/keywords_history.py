@@ -4,14 +4,7 @@ from typing import List
 
 from pydantic import Field, PrivateAttr
 
-from schemas.base import (
-    BaseRequest,
-    BaseResponse,
-    CountryCode,
-    HistoryGrouping,
-    RequestMode,
-    response_for,
-)
+from schemas.base import BaseRequest, BaseResponse, response_for
 
 
 class SelectMode(str, Enum):
@@ -27,36 +20,7 @@ class SelectMode(str, Enum):
 class KeywordsHistoryRequest(BaseRequest):
     _endpoint: str = PrivateAttr("/v3/site-explorer/keywords-history")
     _obj_name: str = PrivateAttr("keywords")
-    target: str = Field(..., description="The target of the search: a domain or a URL.")
-    country_code: CountryCode | None = Field(
-        None,
-        title="Country Code",
-        description="The country code to use for the request. Defaults to None.",
-    )
-    date_to: DateType | None = Field(
-        None, description="The end date of the historical period in YYYY-MM-DD format."
-    )
-    history_grouping: HistoryGrouping = Field(
-        HistoryGrouping.monthly,
-        title="History Grouping",
-        description="The time interval used to group historical data. `daily`, `weekly`, `monthly`",
-    )
-    mode: RequestMode = Field(
-        RequestMode.subdomains,
-        title="Mode",
-        description=(
-            "The scope of the search based on the target you entered. `exact`, `prefix`, `domain`, `subdomains`"
-        ),
-    )
-    protocol: str = Field(
-        "both",
-        description="The protocol to use for the request. Defaults to 'http'.",
-    )
-    date_from: DateType = Field(
-        ...,
-        title="Date From",
-        description="The start date of the historical period in YYYY-MM-DD format.",
-    )
+    # Response specific fields
     select: List[SelectMode] = Field(
         [SelectMode.date, SelectMode.top3, SelectMode.top4_10, SelectMode.top11_plus],
         title="Select",
@@ -65,6 +29,13 @@ class KeywordsHistoryRequest(BaseRequest):
             "`date`, `top3`, `top4-10`, `top11-plus`"
         ),
     )
+    # Required fields
+    date_from: DateType = Field(
+        ...,
+        title="Date From",
+        description="The start date of the historical period in YYYY-MM-DD format.",
+    )
+    target: str = Field(..., description="The target of the search: a domain or a URL.")
 
     def dict(self, **kwargs) -> dict:
         d = super().dict(**kwargs)
