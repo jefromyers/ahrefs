@@ -177,13 +177,24 @@ if __name__ == "__main__":
         #     print(f"Country: {hist.country} Organic Traffic: {hist.org_traffic}")
 
         # Pages By Traffic
+        # target = "https://citationlabs.com/"
+        # request = PagesByTrafficRequest(
+        #     target=target,
+        #     mode=RequestMode.subdomains,
+        #     offset=0,
+        #     protocol="both",
+        #     volume_mode=VolumeMode.monthly,
+        # )
+        # result = api.request(request)
+        # print(result)
+
+        # All Backlinks
         target = "https://citationlabs.com/"
-        request = PagesByTrafficRequest(
+        request = AllBacklinksRequest(
             target=target,
-            mode=RequestMode.subdomains,
-            offset=0,
-            protocol="both",
-            volume_mode=VolumeMode.monthly,
+            select=[AllBacklinksSelect.anchor, AllBacklinksSelect.url_from],
+            limit=10,
         )
         result = api.request(request)
-        print(result)
+        for backlink in result:
+            print(f"URL: {backlink.anchor} Referring Page: {backlink.url_from}")
