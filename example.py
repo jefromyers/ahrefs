@@ -346,4 +346,72 @@ if __name__ == "__main__":
         # for page in results:
         #     print(f"Anchor: {page.anchor} Links: {page.dofollow_links}")
 
+        # Keyword Overview
+        # request = KeywordOverviewRequest(
+        #     select=[
+        #         KeywordOverviewSelect.keyword,
+        #         KeywordOverviewSelect.volume,
+        #         KeywordOverviewSelect.difficulty,
+        #     ],
+        #     country=Country.US,
+        #     keywords="seo",
+        # )
+        # results = api.request(request)
+        # for keyword in results:
+        #     print(
+        #         f"Keyword: {keyword.keyword} Volume: {keyword.volume} Difficulty: {keyword.difficulty}"
+        #     )
+
+        # Volume History
+        # request = VolumeHistoryRequest(
+        #     country=Country.US,
+        #     keyword="seo",
+        # )
+        # results = api.request(request)
+        # for keyword in results:
+        #     print(f"Date: {keyword.date} Volume: {keyword.volume}")
+
+        # Volume By Country
+        # request = VolumeByCountryRequest(
+        #     keyword="seo",
+        # )
+        # results = api.request(request)
+        # for keyword in results:
+        #     print(f"Date: {keyword.country} Volume: {keyword.volume}")
+
+        # Matching Terms
+        # request = MatchingTermsRequest(
+        #     select=[MatchingTermsSelect.keyword, MatchingTermsSelect.cpc],
+        #     country=Country.US,
+        #     keywords="seo",
+        # )
+        # results = api.request(request)
+        # for keyword in results:
+        #     print(f"Keyword: {keyword.keyword} CPC: {keyword.cpc}")
+        #
+
+        # Related Terms
+        # request = RelatedTermsRequest(
+        #     select=[RelatedTermsSelect.keyword, RelatedTermsSelect.cpc],
+        #     country=Country.US,
+        #     keywords="seo",
+        # )
+        # results = api.request(request)
+        # for keyword in results:
+        #     print(f"Keyword: {keyword.keyword} CPC: {keyword.cpc}")
+
+        # Search suggestions
+        # request = SearchSuggestionsRequest(
+        #     select=[RelatedTermsSelect.keyword, RelatedTermsSelect.cpc],
+        #     country=Country.US,
+        #     keywords="seo",
+        # )
+        # results = api.request(request)
+        # for keyword in results:
+        #     print(f"Keyword: {keyword.keyword} CPC: {keyword.cpc}")
+
+        request = LimitsAndUsageRequest()
+        result = api.request(request)
+        print(result)
+
         ...
